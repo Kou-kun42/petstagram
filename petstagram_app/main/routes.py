@@ -1,8 +1,8 @@
 from flask import Blueprint, request, render_template, redirect, url_for, flash
 from flask_login import login_user, logout_user, login_required, current_user
 from datetime import date, datetime
-from petstagram_app.models import Game, Console, Collection, User
-from petstagram_app.main.forms import GameForm, ConsoleForm, CollectionForm
+from petstagram_app.models import Post, User
+from petstagram_app.main.forms import PostForm
 from petstagram_app import bcrypt
 from petstagram_app import app, db
 
@@ -17,67 +17,28 @@ main = Blueprint("main", __name__)
 @main.route('/')
 def homepage():
 
-    context = {
-        "consoles": Console.query.all(),
-        "games": Game.query.all()
-    }
-
-    return render_template('home.html', **context)
+    return render_template('home.html', Post.query.all())
 
 
-@main.route('/create_game', methods=['GET', 'POST'])
+@main.route('/create_post', methods=['GET', 'POST'])
 @login_required
-def create_game():
-    form = GameForm()
+def create_post():
+    form = PostForm()
 
     if form.validate_on_submit():
-        new_game = Game(
+        new_post = Post(
             title=form.title.data,
-            release_date=form.release_date.data,
-            console=form.console.data,
-            collections=form.collections.data
+            message=form.message.data,
+            photo_url=form.photo_url.data,
+            user=current_user
         )
-        db.session.add(new_game)
+        db.session.add(new_post)
         db.session.commit()
 
-        flash('New game was created and added to collection successfully.')
-        return redirect(url_for('main.game_detail', game_id=new_game.id))
-    return render_template('create_game.html', form=form)
+        flash('New post was created successfully.')
+        return redirect(url_for('main.user', user_id=current_user.id))
+    return render_template('create_post.html', form=form)
 
-
-@main.route('/create_console', methods=['GET', 'POST'])
-@login_required
-def create_console():
-    form = ConsoleForm()
-    if form.validate_on_submit():
-        new_console = Console(
-            name=form.name.data
-        )
-        db.session.add(new_console)
-        db.session.commit()
-
-        flash('New console created successfully.')
-        return redirect(url_for('main.homepage'))
-
-    return render_template('create_console.html', form=form)
-
-
-@main.route('/create_collection', methods=['GET', 'POST'])
-@login_required
-def create_collection():
-    form = CollectionForm()
-    if form.validate_on_submit():
-        new_collection = Collection(
-            name=form.name.data,
-            user=current_user.id
-        )
-        db.session.add(new_collection)
-        db.session.commit()
-
-        flash('New collection created successfully.')
-        return redirect(url_for('main.homepage'))
-
-    return render_template('create_collection.html', form=form)
 
 
 @main.route('/game_detail/<game_id>', methods=['GET', 'POST'])

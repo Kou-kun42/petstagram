@@ -7,46 +7,23 @@ from wtforms import (
     SubmitField,
     TextAreaField
 )
-from wtforms.ext.sqlalchemy.fields import (
-    QuerySelectField,
-    QuerySelectMultipleField
-)
 from flask_login import current_user
-from wtforms.validators import DataRequired, Length, ValidationError
-from petstagram_app.models import Game, Console, Collection
+from wtforms.validators import DataRequired, Length, ValidationError, URL
+from petstagram_app.models import Post
 
 
-class GameForm(FlaskForm):
-    """Form to create a game."""
+class PostForm(FlaskForm):
+    """Form to create a post."""
     title = StringField(
-        'Game Title',
+        'Post Title',
         validators=[DataRequired(), Length(min=3, max=80)]
         )
-    release_date = DateField('Date Released')
-    console = QuerySelectField(
-        'Console',
-        query_factory=lambda: Console.query, allow_blank=False
+    message = StringField(
+        'Post Message',
+        validators=[DataRequired(), Length(min=3, max=280)]
         )
-    collections = QuerySelectMultipleField(
-        'Add to Collection',
-        query_factory=lambda: Collection.query.filter_by(user=current_user.id)
-        )
-    submit = SubmitField('Submit')
-
-
-class ConsoleForm(FlaskForm):
-    """Form to create a console."""
-    name = StringField(
-        'Console Name',
-        validators=[DataRequired(), Length(min=3, max=80)]
-        )
-    submit = SubmitField('Submit')
-
-
-class CollectionForm(FlaskForm):
-    """Form to create a collection."""
-    name = StringField(
-        'Collection Name',
-        validators=[DataRequired(), Length(min=3, max=120)]
+    photo_url = StringField(
+        'Item Picture',
+        validators=[DataRequired(), URL()]
         )
     submit = SubmitField('Submit')
