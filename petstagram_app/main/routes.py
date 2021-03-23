@@ -16,8 +16,10 @@ main = Blueprint("main", __name__)
 
 @main.route('/')
 def homepage():
+    posts = Post.query.all()
+    posts.reverse()
 
-    return render_template('home.html', posts=Post.query.all())
+    return render_template('home.html', posts=posts)
 
 
 @main.route('/create_post', methods=['GET', 'POST'])

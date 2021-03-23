@@ -6,17 +6,24 @@ body {
   font-family: "Open Sans", sans-serif;
 }
 
-#posts {
+div.posts {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   margin: 2rem;
   padding: 1rem;
   justify-content: space-around;
 }
 
-#post {
-  border-radius: 5px;
+div.post-details {
+  border: 3px solid black;
+  padding: 2rem;
+  margin: 2rem;
+}
+
+p.title {
+  text-align: center;
+  font-size: large;
 }
 
 #content {
