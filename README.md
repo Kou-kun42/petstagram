@@ -29,6 +29,14 @@ Next, install all the required packages:
 pip3 install -r requirements.txt
 ```
 
+Add a .env file to the root of the project directory with the following key names
+```bash
+SQLALCHEMY_DATABASE_URI=sqlite:///database.db
+
+SECRET_KEY={Your auth session secret key}
+(You can create and use any strong password of your choosing)
+```
+
 Finally, launch the app:
 
 ```
