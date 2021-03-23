@@ -1,0 +1,40 @@
+{% extends 'base.html' %} {% block content %}
+
+<form method="POST" action="{{url_for('main.create_game')}}">
+  {{form.csrf_token}}
+  <fieldset>
+    <legend>Add a new game:</legend>
+
+    {{form.title.label}} {{form.title}}
+    <ul>
+      {% for error in form.title.errors %}
+      <li class="error">{{error}}</li>
+      {% endfor %}
+    </ul>
+
+    {{form.release_date.label}} {{form.release_date(placeholder="YYYY-mm-dd")}}
+    <ul>
+      {% for error in form.release_date.errors %}
+      <li class="error">{{error}}</li>
+      {% endfor %}
+    </ul>
+
+    {{form.console.label}} {{form.console}}
+    <ul>
+      {% for error in form.console.errors %}
+      <li class="error">{{error}}</li>
+      {% endfor %}
+    </ul>
+
+    {{form.collections.label}} {{form.collections}}
+    <ul>
+      {% for error in form.collections.errors %}
+      <li class="error">{{error}}</li>
+      {% endfor %}
+    </ul>
+
+    {{form.submit}}
+  </fieldset>
+</form>
+
+{% endblock %}

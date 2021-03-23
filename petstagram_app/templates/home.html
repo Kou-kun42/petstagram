@@ -1,0 +1,19 @@
+{% extends 'base.html' %} {% block content %}
+
+<h2>Consoles</h2>
+
+<ul>
+  {% for console in consoles %}
+  <li><a href="/console_detail/{{console.id}}">{{console.name}}</a></li>
+  {% endfor %}
+</ul>
+
+<h2>Games</h2>
+
+<p>
+  {% for game in games %}
+  <a href="/game_detail/{{game.id}}">{{game.title}}</a>
+  {% endfor %}
+</p>
+
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'base.html' %} {% block content %}
+
+<h1>{{console.name}}</h1>
+
+<ul>
+  {% for game in console.games %}
+  <li><a href="/game_detail/{{game.id}}">{{game.title}}</a></li>
+  {% endfor %}
+</ul>
+
+{% if current_user.is_authenticated %}
+<form
+  method="POST"
+  action="{{url_for('main.console_detail', console_id=console.id)}}"
+>
+  {{form.csrf_token}}
+  <fieldset>
+    <legend>Edit this console's name</legend>
+
+    {{form.name.label}} {{form.name}} {{form.submit}}
+  </fieldset>
+</form>
+{% endif %} {% endblock %}

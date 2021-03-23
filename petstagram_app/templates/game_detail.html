@@ -1,0 +1,21 @@
+{% extends 'base.html' %} {% block content %}
+
+<h1>{{game.title}}</h1>
+
+<p><strong>Platform</strong>: {{game.console.name}}</p>
+
+<p><strong>Released on</strong>: {{game.release_date.strftime('%B %d, %Y')}}</p>
+
+{% if current_user.is_authenticated %}
+<form method="POST" action="{{url_for('main.game_detail', game_id=game.id)}}">
+  {{form.csrf_token}}
+  <fieldset>
+    <legend>Edit this game's details</legend>
+
+    {{form.title.label}} {{form.title}} {{form.release_date.label}}
+    {{form.release_date(placeholder="YYYY-mm-dd")}} {{form.console.label}}
+    {{form.console}} {{form.collections.label}} {{form.collections}}
+    {{form.submit}}
+  </fieldset>
+</form>
+{% endif %} {% endblock %}

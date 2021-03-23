@@ -1,0 +1,11 @@
+{% extends 'base.html' %} {% block content %}
+
+<p>{{current_user.username}}'s game collections:</p>
+
+<ul>
+  {% for collection in collects %}
+  <li><a href="/collection/{{collection.id}}">{{collection.name}}</a></li>
+  {% endfor %}
+</ul>
+
+{% endblock %}
