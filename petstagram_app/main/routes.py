@@ -30,21 +30,21 @@ def create_post():
             title=form.title.data,
             message=form.message.data,
             photo_url=form.photo_url.data,
-            user=current_user
+            user=User.query.get(current_user.id).username
         )
         db.session.add(new_post)
         db.session.commit()
 
         flash('New post was created successfully.')
-        return redirect(url_for('main.user', user_id=current_user.id))
+        return redirect(url_for('main.homepage'))
     return render_template('create_post.html', form=form)
 
 
 @main.route('/post/<post_id>', methods=['GET', 'POST'])
 @login_required
-def post(post_id):
+def post_detail(post_id):
     post = Post.query.get(post_id)
-    form = PostForm(obj=game)
+    form = PostForm(obj=post)
 
     if form.validate_on_submit():
         post.title = form.title.data
@@ -54,13 +54,14 @@ def post(post_id):
         db.session.commit()
 
         flash('Post was updated successfully.')
-        return redirect(url_for('main.post', post_id=post_id))
+        return redirect(url_for('main.post_detail', post_id=post_id))
 
-    return render_template('post.html', post=post, form=form)
+    return render_template('post_detail.html', post=post, form=form)
 
 
 @main.route('/user/<user_id>')
 @login_required
-def collections(user_id):
-    posts = Post.query.filter_by(user=user_id)
-    return render_template('collections.html', posts=posts)
+def user(user_id):
+    username = User.query.get(user_id).username
+    posts = Post.query.filter_by(user=username)
+    return render_template('user.html', posts=posts)

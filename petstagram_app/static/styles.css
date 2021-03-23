@@ -6,6 +6,19 @@ body {
   font-family: "Open Sans", sans-serif;
 }
 
+#posts {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 2rem;
+  padding: 1rem;
+  justify-content: space-around;
+}
+
+#post {
+  border-radius: 5px;
+}
+
 #content {
   width: 70%;
   background-color: white;

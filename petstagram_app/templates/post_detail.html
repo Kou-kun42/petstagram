@@ -1,0 +1,23 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="post-details">
+  <p><strong>{{ post.title }}</strong></p>
+  <p>{{ post.user }}</p>
+  <a href="/post/{{ post.id }}"
+    ><img src="{{ post.photo_url }}" alt="{{ post.title }}" width="500px"
+  /></a>
+
+  <p>{{post.message}}</p>
+</div>
+
+{% if current_user.is_authenticated %}
+<form method="POST" action="{{url_for('main.post_detail', post_id=post.id)}}">
+  {{form.csrf_token}}
+  <fieldset>
+    <legend>Edit this post's details</legend>
+
+    {{form.title.label}} {{form.title}} {{form.message.label}} {{form.message}}
+    {{form.photo_url.label}} {{form.photo_url}} {{form.submit}}
+  </fieldset>
+</form>
+{% endif %} {% endblock %}

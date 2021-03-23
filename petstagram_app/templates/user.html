@@ -1,6 +1,6 @@
 {% extends 'base.html' %} {% block content %}
 
-<h2>Your Feed</h2>
+<p>{{current_user.username}}'s posts:</p>
 
 <div class="posts">
   {% for post in posts %}

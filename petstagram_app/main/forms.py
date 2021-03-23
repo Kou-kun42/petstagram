@@ -23,7 +23,7 @@ class PostForm(FlaskForm):
         validators=[DataRequired(), Length(min=3, max=280)]
         )
     photo_url = StringField(
-        'Item Picture',
+        'Picture URL',
         validators=[DataRequired(), URL()]
         )
     submit = SubmitField('Submit')
